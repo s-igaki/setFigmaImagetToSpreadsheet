@@ -1,0 +1,46 @@
+function myFunction() {
+  // シート情報の取得
+  var spreadsheet = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = spreadsheet.getSheetByName("テスト1");
+
+  // 画像削除
+  var images = sheet.getImages();
+  for (var i = 0;i < images.length;i++) {
+    images[i].remove();
+  }
+
+  // 画像貼り付け
+  let imageUrl = getFigmaImageUrl();
+  if (imageUrl != "") {
+    let column = 1;
+    let row = 1;
+    sheet.insertImage(imageUrl, column, row); 
+  }
+}
+
+function getFigmaImageUrl() {
+  // APIで画像の取得
+  let fileKey = "";
+  let ids = "";
+  let figmaEndpoint = `https://api.figma.com/v1/images/${fileKey}?ids=${ids}`;
+  let figmaAccessTokne = "";
+  let result = "";
+  var options = {
+    'method': 'get',
+    'contentType': 'application/json',
+    'headers': {
+      'X-FIGMA-TOKEN': figmaAccessTokne
+    }
+  };
+  var response = UrlFetchApp.fetch(figmaEndpoint + ids, options);
+  console.log(response.getResponseCode());
+  console.log(response.getContentText());
+  if (response.getResponseCode() == "200") {
+    let data = JSON.parse(response.getContentText());
+    console.log(data);
+    console.log(data["images"][ids])
+    result = data["images"][ids];
+  }
+  return result;
+}
+
