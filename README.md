@@ -4,3 +4,6 @@
 fileKey : figmaの対象ファイルのキー。URLに添付されている
 ids : ダウンロードしたい対象画面のid。対象画面にフォーカスするとURLのクエリーに含まれる。
 figmaAccessTokne : figmaのsettingsから取得可能。
+
+## 参考資料
+[figma api](https://www.figma.com/developers/api#get-images-endpoint)
